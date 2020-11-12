@@ -5,11 +5,10 @@ import { UpdateNoteDto } from './dto/update-note.dto';
 
 @Controller('notes')
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(private readonly notesService: NotesService) { }
 
   @Post()
   create(@Body() createNoteDto: CreateNoteDto) {
-    console.log('createNoteDto = ', createNoteDto)
     return this.notesService.create(createNoteDto);
   }
 
