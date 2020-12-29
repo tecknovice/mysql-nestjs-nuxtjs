@@ -10,14 +10,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'password',
+      password: 'root',
       database: 'test',
       autoLoadEntities: true,
       synchronize: true,
-      logging: true
+      logging: true,
     }),
-    NotesModule],
+    NotesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
