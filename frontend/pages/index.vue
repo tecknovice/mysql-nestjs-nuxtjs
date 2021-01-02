@@ -20,7 +20,7 @@
 </style>
 
 <script lang="ts">
-import { axios } from '../utils/axios'
+import { $axios } from '../utils/api'
 import item from '../components/item.vue'
 import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
@@ -31,8 +31,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component
 export default class Index extends Vue {
   async asyncData(context: any) {
-    console.log('axios = ', axios)
-    const notes = await axios.$get('notes')
+    console.log('axios = ', $axios)
+    const notes = await $axios.$get('notes')
     console.log('notes', notes)
     return { notes }
   }
