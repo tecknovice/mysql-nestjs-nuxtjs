@@ -6,7 +6,13 @@
         <NuxtLink to="/create"><el-button>Create</el-button></NuxtLink>
       </div>
     </div>
-    <item v-for="note in notes" :key="note.id" :note="note" @updateItem="updateItem(note)" @deleteItem="deleteItem(note)" />
+    <item
+      v-for="note in notes"
+      :key="note.id"
+      :note="note"
+      @updateItem="updateItem(note)"
+      @deleteItem="deleteItem(note)"
+    />
   </el-main>
 </template>
 
@@ -27,15 +33,16 @@ import { Component, Vue } from 'nuxt-property-decorator'
 })
 export default class Index extends Vue {
   async asyncData() {
-    try {      
+    try {
       const notes = await $axios.$get('notes')
       return { notes }
     } catch (error) {
       console.error(error)
     }
   }
-  updateItem(note: any){
+  updateItem(note: any) {
     this.$router.push(`${note.id}`)
   }
+  deleteItem(note: any) {}
 }
 </script>

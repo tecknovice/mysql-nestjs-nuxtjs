@@ -5,7 +5,7 @@
     </div>
     <el-form ref="form" :model="form">
       <el-form-item>
-        <el-input v-model="form.content" type="textarea"></el-input>
+        <el-input v-model="form.note" type="textarea"></el-input>
       </el-form-item>
       <div class="flex">
         <el-button @click="onSubmit">Create/Update</el-button>
@@ -23,60 +23,57 @@
 
 <script lang="ts">
 interface Note {
-  id: number,
-  content: string
+  id: number | null
+  note: string
 }
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { $axios } from '../utils/api'
-import {Route} from 'vue-router'
+import { Route } from 'vue-router'
 @Component
 export default class Create extends Vue {
   private form: Note = {
-    id: 0,
-    content: '',
+    id: null,
+    note: '',
   }
-  slug: string = ''
-  // async asyncData(context: any){
-  //   const slug = context.params.slug
-  //   let form: Note = {
-  //     id: 0,
-  //   content: '',
-  //   }
-  //   if(Number(slug)){
-  //     try {
-  //       form = await $axios.$get(`/notes/${slug}`)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   return{
-  //     form
-  //   }
-  // }
-  async created(){
-    console.log('mounted this.$route', this.$route)
-    this.slug = this.$route.params.slug
-    console.log('Number(this.slug)',Number(this.slug))
-    if(Number(this.slug)){
+  private slug: string = ''
+  async asyncData(context: any) {
+    console.log('asyncData')
+    const slug = context.params.slug
+    if (Number(slug)) {
       try {
-        this.form = await $axios.$get(`/notes/${this.slug}`)
-        console.log('this.form',this.form)
+        const form = await $axios.$get(`/notes/${slug}`)
+        return { form }
       } catch (error) {
         console.error(error)
       }
+    } else {
+      return { slug }
     }
   }
+  // async fetch() {
+  //   console.log('fetch')
+  //   const slug = 2
+  //   console.log('slug', slug)
+  //   if (Number(slug)) {
+  //     try {
+  //       this.form = await $axios.$get(`/notes/${slug}`)
+  //       console.log(this.form)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   } else {
+  //     this.slug = 'create'
+  //   }
+  // }
   async onSubmit() {
     try {
-      console.log('this.slug',this.slug)
-      console.log('this.form',this.form)
-      if(this.slug =='create')
-      await $axios.$post('notes', { note: this.form.content })
-      else if(Number(this.slug))
-      await $axios.$put(`/notes/${this.slug}`,{note: this.form.content})
+      if (this.slug && this.slug == 'create')
+        await $axios.$post('notes', { note: this.form.note })
+      else if (Number(this.form.id))
+        await $axios.$put(`/notes/${this.form.id}`, { note: this.form.note })
       this.$router.push('/')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   onCancel() {
