@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header height="100" style="text-align: center">header</el-header>
+    <el-header height="100" style="text-align: center">CRUD APP</el-header>
     <Nuxt />
   </el-container>
 </template>
