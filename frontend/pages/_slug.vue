@@ -50,10 +50,11 @@ export default class Create extends Vue {
       return { slug }
     }
   }
+
+  //from nuxt 2.12 you can only use fetch without parameters
   // async fetch() {
   //   console.log('fetch')
   //   const slug = 2
-  //   console.log('slug', slug)
   //   if (Number(slug)) {
   //     try {
   //       this.form = await $axios.$get(`/notes/${slug}`)
