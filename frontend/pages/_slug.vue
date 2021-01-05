@@ -63,6 +63,7 @@ export default class Create extends Vue {
   //     this.slug = 'create'
   //   }
   // }
+
   async onSubmit() {
     try {
       if (this.slug && this.slug == 'create')
