@@ -9,14 +9,15 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Note from '@/entities/Note'
 @Component
 export default class Item extends Vue {
-  @Prop() readonly note!: any
-  updateItem(){
-    this.$emit("updateItem",this.note)
+  @Prop() readonly note!: Note
+  updateItem() {
+    this.$emit('updateItem', this.note)
   }
-  deleteItem(){
-    this.$emit("deleteItem",this.note)
+  deleteItem() {
+    this.$emit('deleteItem', this.note)
   }
 }
 </script>

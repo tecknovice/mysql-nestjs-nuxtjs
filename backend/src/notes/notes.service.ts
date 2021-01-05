@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class NotesService {
-  constructor(@InjectRepository(Note) private noteRepo: Repository<Note>) { }
+  constructor(@InjectRepository(Note) private noteRepo: Repository<Note>) {}
 
   create(createNoteDto: CreateNoteDto) {
     return this.noteRepo.save(createNoteDto);

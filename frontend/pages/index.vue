@@ -24,7 +24,8 @@
 
 <script lang="ts">
 import { $axios } from '../utils/api'
-import item from '../components/item.vue'
+import item from '@/components/item.vue'
+import Note from '@/entities/Note'
 import { Component, Vue } from 'nuxt-property-decorator'
 @Component({
   components: {
@@ -32,6 +33,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
   },
 })
 export default class Index extends Vue {
+  private notes: Note[] = []
   async asyncData() {
     try {
       const notes = await $axios.$get('notes')
@@ -43,6 +45,14 @@ export default class Index extends Vue {
   updateItem(note: any) {
     this.$router.push(`${note.id}`)
   }
-  deleteItem(note: any) {}
+  async deleteItem(note: any) {
+    try {
+      await $axios.$delete(`notes/${note.id}`)
+      const index = this.notes.findIndex((item) => item.id == note.id)
+      this.notes.splice(index, 1)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 </script>

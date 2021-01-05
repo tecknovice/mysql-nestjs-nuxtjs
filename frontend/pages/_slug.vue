@@ -22,13 +22,10 @@
 </style>
 
 <script lang="ts">
-interface Note {
-  id: number | null
-  note: string
-}
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { $axios } from '../utils/api'
+import { $axios } from '@/utils/api'
 import { Route } from 'vue-router'
+import Note from '@/entities/Note'
 @Component
 export default class Create extends Vue {
   private form: Note = {
