@@ -1,65 +1,58 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">frontend</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <el-main>
+    <div class="flex header">
+      <div>Read/Delete Entity</div>
+      <div>
+        <NuxtLink to="/create"><el-button>Create</el-button></NuxtLink>
       </div>
     </div>
-  </div>
+    <item
+      v-for="note in notes"
+      :key="note.id"
+      :note="note"
+      @updateItem="updateItem(note)"
+      @deleteItem="deleteItem(note)"
+    />
+  </el-main>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({})
-</script>
-
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.header {
+  padding: 10px;
 }
 </style>
+
+<script lang="ts">
+import { $axios } from '../utils/api'
+import item from '@/components/item.vue'
+import Note from '@/entities/Note'
+import { Component, Vue } from 'nuxt-property-decorator'
+@Component({
+  components: {
+    item,
+  },
+})
+export default class Index extends Vue {
+  private notes: Note[] = []
+  async asyncData() {
+    try {
+      const notes = await $axios.$get('notes')
+      return { notes }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  updateItem(note: any) {
+    this.$router.push(`${note.id}`)
+  }
+  async deleteItem(note: any) {
+    try {
+      await $axios.$delete(`notes/${note.id}`)
+      const index = this.notes.findIndex((item) => item.id == note.id)
+      this.notes.splice(index, 1)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+</script>

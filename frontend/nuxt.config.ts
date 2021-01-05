@@ -1,4 +1,5 @@
-export default {
+import { NuxtConfig } from '@nuxt/types'
+const config: NuxtConfig = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'frontend',
@@ -11,10 +12,10 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['element-ui/lib/theme-chalk/index.css'],
+  css: ['element-ui/lib/theme-chalk/index.css', 'assets/main.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '~/plugins/axios-accessor.ts'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -39,3 +40,4 @@ export default {
     transpile: [/^element-ui/],
   },
 }
+export default config

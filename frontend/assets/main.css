@@ -1,0 +1,23 @@
+body {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.el-button {
+  background: #c4c4c4;
+
+  color: #000000;
+}
+.el-button:focus,
+.el-button:hover {
+  border-color: #c4c4c4;
+  background: #c4c4c4;
+  color: #000000;
+}
