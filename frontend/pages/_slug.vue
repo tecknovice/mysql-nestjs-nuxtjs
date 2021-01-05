@@ -24,7 +24,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { $axios } from '@/utils/api'
-import { Route } from 'vue-router'
+// import { Route } from 'vue-router'
 import Note from '@/entities/Note'
 @Component
 export default class Create extends Vue {
